@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WELCOME TO WEBSITE JOKI KONTAK - CEO RAFFSTR JOKI ELITE</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7c3aed">
+<style>
+  :root{--p:#7c3aed;--s:#ec4899;--bg:#070b14;--card:#111827;--muted:#1f2937;--gold:#fbbf24}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
+  body{background:var(--bg);color:#e5e7eb}
+  header img{width:100%;max-width:1000px;display:block;margin:0 auto;border-bottom:4px solid var(--p);box-shadow:0 0 40px #7c3aed80}
+  .title{background:linear-gradient(90deg,var(--p),var(--s));padding:16px;text-align:center}
+  .title h1{font-size:20px;font-weight:900}
+  .flash{background:var(--gold);color:#000;text-align:center;padding:10px;font-weight:900;display:none}
+  .nav{display:flex;gap:8px;justify-content:center;padding:12px;background:#050a14;position:sticky;top:0;z-index:20;flex-wrap:wrap}
+  .nav button{background:var(--muted);border:none;color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}
+  .nav button.active{background:var(--p)}
+  .container{max-width:1000px;margin:20px auto;padding:15px}
+  .card{background:var(--card);border-radius:16px;padding:20px;margin-bottom:15px}
+  .paket{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+  .paket button{background:var(--muted);border:2px solid transparent;color:#fff;padding:16px;border-radius:12px;cursor:pointer;font-weight:800;position:relative}
+  .paket button.active{border-color:var(--s);background:var(--p);transform:scale(1.05)}
+  .diskon{position:absolute;top:-8px;right:-8px;background:red;color:#fff;font-size:10px;padding:3px 6px;border-radius:6px}
+  .btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(90deg,var(--p),var(--s));color:#fff;font-weight:900;cursor:pointer;margin-top:10px}
+  .btn-ghost{background:var(--muted)}
+  input,textarea{width:100%;padding:12px;background:var(--muted);border:1px solid #374151;border-radius:10px;color:#fff;margin-top:8px}
+  .dana-box{background:#050a14;padding:14px;border-radius:12px;border:1px solid var(--p)}
+  .progress{display:flex;justify-content:space-between;margin:20px 0}
+  .step{text-align:center;flex:1;font-size:12px}
+  .step .dot{width:28px;height:28px;border-radius:50%;background:var(--muted);margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-weight:900}
+  .step.active .dot{background:var(--p)}.step.done .dot{background:#10b981}
+  .order-item{background:var(--muted);padding:14px;border-radius:12px;margin-bottom:10px}
+  .badge{padding:5px 10px;border-radius:20px;font-size:11px;font-weight:800}
+  .b1{background:#f59e0b33;color:#f59e0b}.b2{background:#3b82f633;color:#3b82f6}.b3{background:#10b98133;color:#10b981}
+  .hidden{display:none}
+  .wa-float{position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;padding:14px 18px;border-radius:50px;font-weight:900;text-decoration:none;z-index:99}
+  .poin-box{background:linear-gradient(90deg,var(--p),var(--s));padding:18px;border-radius:14px;text-align:center}
+  .chatbox{height:200px;overflow-y:auto;background:#050a14;padding:10px;border-radius:10px;margin-bottom:10px}
+  .radar{animation:blink 1s infinite} @keyframes blink{50%{opacity:.3}}
+  .login-admin{background:#050a14;padding:15px;border-radius:12px;margin-bottom:15px}
+</style>
+</head>
+<body>
+<header>
+  <img src="banner-raffstr.jpg" alt="CEO RAFFSTR">
+  <div id="flash-sale" class="flash">🔥 FLASH SALE JUMAT - SEMUA PAKET DISKON 50% 🔥</div>
+  <div class="title">
+    <h1>WELCOME TO WEBSITE JOKI KONTAK</h1>
+    <p>CEO RAFFSTR JOKI ELITE | Amanah & Cepat 24 Jam</p>
+  </div>
+</header>
+
+<div class="nav">
+  <button class="active" onclick="showPage('home')">Home</button>
+  <button onclick="showPage('ai')">AI Assistant</button>
+  <button onclick="showPage('dashboard')">Dashboard</button>
+  <button onclick="showPage('voucher')">Voucher</button>
+  <button onclick="showPage('admin')">Admin Panel</button>
+</div>
+
+<div class="container">
+  <!-- HOME -->
+  <div id="home">
+    <div class="card" id="page-paket">
+      <h2>💎 Pilih Paket Joki</h2>
+      <div class="paket" id="list-paket"></div>
+      <input type="text" id="kode-voucher" placeholder="Masukkan Kode Voucher: RAFF50 / RAFF10">
+      <button class="btn" id="btn-lanjut">Lanjut Ke Pembayaran →</button>
+    </div>
+
+    <div class="card hidden" id="page-bayar">
+      <h2>💳 Metode Pembayaran</h2>
+      <p>Paket: <b id="paket-dipilih">-</b> | Harga: <b id="harga-dipilih">-</b></p>
+      <div class="dana-box">
+        <h3>DANA</h3>
+        <p><b>083867468118</b></p>
+        <p>a.n: <b>LIP</b></p>
+      </div>
+      <p>Upload SS Bukti Transfer:</p>
+      <input type="file" id="bukti" accept="image/*">
+      <button class="btn" id="btn-kirim">Kirim Bukti ke Admin WA</button>
+      <button class="btn btn-ghost" id="btn-mintaqr">Minta QR DANA ke Admin</button>
+      <button class="btn btn-ghost" onclick="showPage('home')">← Kembali</button>
+    </div>
+
+    <div class="card hidden" id="page-status">
+      <h2>📦 Tracking Order</h2>
+      <p>Order ID: <b id="order-id">-</b></p>
+      <div class="progress">
+        <div class="step" id="step1"><div class="dot">1</div>Menunggu<br>Pembayaran</div>
+        <div class="step" id="step2"><div class="dot">2</div>Menunggu<br>ACC</div>
+        <div class="step" id="step3"><div class="dot">3</div>Berhasil</div>
+      </div>
+      <div id="sukses-box" class="hidden"><div class="badge b3">PEMBAYARAN JOKI SUKSES ✅</div></div>
+      <p style="font-size:12px;color:#f59e0b">*Sebelum SS Bukti Transfer di ACC sama Admin</p>
+      <button class="btn" onclick="resetOrder()">Pesan Lagi</button>
+    </div>
+  </div>
+
+  <!-- AI -->
+  <div id="ai" class="hidden">
+    <div class="card">
+      <h2>🤖 AI-STYLE ORDER ASSISTANT</h2>
+      <div class="chatbox" id="chat"></div>
+      <input type="text" id="chat-input" placeholder="Contoh: paket paling murah apa?">
+      <button class="btn" onclick="sendAI()">Kirim</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="hidden">
+    <div class="card poin-box">
+      <h2>Poin Loyalty Kamu</h2>
+      <h1 id="total-poin">0 POIN</h1>
+    </div>
+    <div class="card">
+      <h2>Riwayat Pesanan</h2>
+      <div id="list-pelanggan"></div>
+    </div>
+  </div>
+
+  <!-- VOUCHER -->
+  <div id="voucher" class="hidden">
+    <div class="card">
+      <h2>🎟️ Voucher Wallet</h2>
+      <p><b>RAFF50</b> = Diskon 30%<br><b>RAFF10</b> = Potong 10K</p>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div id="admin" class="hidden">
+    <div class="card login-admin" id="admin-login">
+      <h2>🔐 Admin Login</h2>
+      <p>Cuma CEO RAFFSTR yang bisa ACC</p>
+      <input type="password" id="admin-pass" placeholder="Masukkan Password Admin">
+      <button class="btn" onclick="loginAdmin()">Masuk</button>
+    </div>
+    <div class="card hidden" id="admin-panel">
+      <h2 class="radar">👑 Admin Control Center <span id="notif"></span></h2>
+      <div id="list-admin"></div>
+    </div>
+  </div>
+</div>
+
+<audio id="notif-sound" src="https://cdn.pixabay.com/download/audio/2022/03/24/audio_d1716f08a8.mp3"></audio>
+<a href="https://wa.me/6283867468118" class="wa-float" target="_blank">Chat Admin</a>
+
+<script>
+const ADMIN_PASS = "RAFFSTRCEO2026"; // GANTI PASSWORD DISINI
+let paketPilih = null, voucher = '', isAdmin = false;
+let orders = JSON.parse(localStorage.getItem('joki_orders')||'[]');
+let poin = parseInt(localStorage.getItem('joki_poin')||'0');
+let paketData = [
+  {nama:"1 Hari", harga:1000}, {nama:"2 Hari", harga:2000}, {nama:"3 Hari", harga:3000},
+  {nama:"4 Hari", harga:4000}, {nama:"5 Hari", harga:5000}, {nama:"Permanen", harga:10000}
+];
+
+// CEK FLASH SALE JUMAT
+if(new Date().getDay() === 5) document.getElementById('flash-sale').style.display='block';
+
+// RENDER PAKET
+function renderPaket(){
+  const isFlash = new Date().getDay() === 5;
+  document.getElementById('list-paket').innerHTML = paketData.map(p=>{
+    let harga = isFlash ? Math.floor(p.harga/2) : p.harga;
+    return `<button data-nama="${p.nama}" data-harga="${harga}">
+      ${p.nama.toUpperCase()} JOKI ${harga/1000}K
+      ${isFlash?'<div class="diskon">-50%</div>':''}
+    </button>`
+  }).join('');
+}
+renderPaket();
+
+function showPage(id){
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('#home, #ai, #dashboard, #voucher, #admin').forEach(p=>p.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  if(id=='dashboard') renderPelanggan();
+  if(id=='admin' && isAdmin) renderAdmin();
+}
+
+// PILIH PAKET
+document.addEventListener('click', e=>{
+  if(e.target.closest('.paket button')){
+    document.querySelectorAll('.paket button').forEach(b=>b.classList.remove('active'));
+    e.target.closest('button').classList.add('active');
+    paketPilih = {nama: e.target.dataset.nama, harga: e.target.dataset.harga};
+  }
+});
+
+document.getElementById('btn-lanjut').onclick = () => {
+  if(!paketPilih) return alert('Pilih paket dulu!');
+  voucher = document.getElementById('kode-voucher').value.toUpperCase();
+  let harga = parseInt(paketPilih.harga);
+  if(voucher=='RAFF50') harga = Math.floor(harga/2);
+  if(voucher=='RAFF10') harga = Math.max(0,harga - 10000);
+  document.getElementById('paket-dipilih').innerText = paketPilih.nama;
+  document.getElementById('harga-dipilih').innerText = 'Rp'+harga;
+  document.getElementById('page-paket').classList.add('hidden');
+  document.getElementById('page-bayar').classList.remove('hidden');
+}
+
+// KIRIM BUKTI
+document.getElementById('btn-kirim').onclick = () => {
+  if(!document.getElementById('bukti').files[0]) return alert('Upload SS bukti dulu!');
+  const orderId = 'RAFF-JOKI' + Date.now();
+  orders.push({id: orderId, paket: paketPilih.nama, harga: document.getElementById('harga-dipilih').innerText, status: 'Menunggu ACC', waktu: new Date().toLocaleString()});
+  localStorage.setItem('joki_orders', JSON.stringify(orders));
+  updateStatus(orderId, 'Menunggu ACC');
+  document.getElementById('page-bayar').classList.add('hidden');
+  document.getElementById('page-status').classList.remove('hidden');
+  document.getElementById('notif').innerHTML = '🔔';
+  document.getElementById('notif-sound').play();
+  window.open(`https://wa.me/6283867468118?text=Halo%20Admin%20Order%20Baru:%20${orderId}%20Paket:%20${paketPilih.nama}`, '_blank');
+}
+
+document.getElementById('btn-mintaqr').onclick = () => {
+  window.open(`https://wa.me/6283867468118?text=Halo%20Admin%20minta%20QR%20DANA%20Joki`, '_blank');
+}
+
+function updateStatus(id, status){
+  document.getElementById('order-id').innerText = id;
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active','done'));
+  if(status=='Menunggu ACC'){document.getElementById('step1').classList.add('done');document.getElementById('step2').classList.add('active')}
+  if(status=='Berhasil'){
+    document.getElementById('step1').classList.add('done');
+    document.getElementById('step2').classList.add('done');
+    document.getElementById('step3').classList.add('active');
+    document.getElementById('sukses-box').classList.remove('hidden');
+    poin += 10; localStorage.setItem('joki_poin', poin);
+  }
+}
+
+// AI
+function sendAI(){
+  const q = document.getElementById('chat-input').value.toLowerCase();
+  let r = "Kak ada paket 1K - 10K. Mau yang berapa hari?";
+  if(q.includes('murah')) r = "Paling murah 1 HARI JOKI 1K kak 🔥";
+  if(q.includes('permanen')) r = "Saran ambil PERMANEN 10K biar sekalian kak";
+  document.getElementById('chat').innerHTML += `<p><b>Kamu:</b> ${q}</p><p><b>AI:</b> ${r}</p>`;
+  document.getElementById('chat-input').value='';
+}
+
+// DASHBOARD
+function renderPelanggan(){
+  document.getElementById('total-poin').innerText = poin + ' POIN';
+  document.getElementById('list-pelanggan').innerHTML = orders.length==0?'<p>Belum ada pesanan</p>':orders.map(o=>`
+    <div class="order-item"><b>${o.id}</b> <span class="badge ${o.status=='Berhasil'?'b3':'b2'}">${o.status}</span><br>${o.paket} - ${o.harga}</div>
+  `).join('');
+}
+
+// ADMIN
+function loginAdmin(){
+  if(document.getElementById('admin-pass').value === ADMIN_PASS){
+    isAdmin = true;
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin-panel').classList.remove('hidden');
+    renderAdmin();
+  }else alert('Password Salah!');
+}
+function renderAdmin(){
+  document.getElementById('list-admin').innerHTML = orders.length==0?'<p>Belum ada order</p>':orders.map(o=>`
+    <div class="order-item"><b>${o.id}</b><br>${o.paket} - ${o.harga}<br>Status: ${o.status}<br>
+    ${o.status=='Menunggu ACC'? `<button class="btn" onclick="acc('${o.id}')">ACC ORDER</button> <button class="btn btn-ghost" onclick="tolak('${o.id}')">TOLAK</button>` : '<span class="badge b3">SUDAH BERHASIL</span>'}</div>
+  `).join('');
+}
+function acc(id){
+  orders = orders.map(o=>o.id==id?{...o,status:'Berhasil'}:o);
+  localStorage.setItem('joki_orders', JSON.stringify(orders)); renderAdmin();
+  if(document.getElementById('order-id').innerText==id) updateStatus(id,'Berhasil');
+  alert('Order '+id+' berhasil di ACC');
+}
+function tolak(id){orders = orders.filter(o=>o.id!=id); localStorage.setItem('joki_orders', JSON.stringify(orders)); renderAdmin();}
+function resetOrder(){paketPilih=null; showPage('home'); renderPaket();}
+
+// PWA
+if('serviceWorker' in navigator){navigator.serviceWorker.register(URL.createObjectURL(new Blob([`self.addEventListener('fetch',e=>{})`],{type:'text/javascript'})));}
+</script>
+</body>
+</html>
